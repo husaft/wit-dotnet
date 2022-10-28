@@ -18,4 +18,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Wit\Wit.csproj" />
+  </ItemGroup>
+
 </Project>

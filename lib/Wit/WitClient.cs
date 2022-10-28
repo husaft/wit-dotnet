@@ -1,4 +1,5 @@
-﻿namespace Wit{
+﻿namespace Wit
+{
     public class WitClient
     {
     }
