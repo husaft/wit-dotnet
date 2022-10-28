@@ -145,5 +145,17 @@ namespace Wit
             var list = rsp.Select(x => x.ToObject<AppInfo>());
             return list.ToArray();
         }
+
+        /// <summary>
+        /// Returns an object representation of the specified app.
+        /// </summary>
+        /// <param name="appId">ID of existing app</param>
+        public async Task<AppInfo> GetAppInfo(string appId)
+        {
+            var endpoint = $"/apps/{WitHttp.Encode(appId)}";
+            var rsp = (await Request(endpoint)).Single();
+            var item = rsp.ToObject<AppInfo>();
+            return item;
+        }
     }
 }

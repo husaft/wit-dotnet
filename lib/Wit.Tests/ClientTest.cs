@@ -41,6 +41,17 @@ namespace Wit.Tests
             Assert.True(basic.Private);
         }
 
+        [Fact]
+        public async Task ShouldGetApp()
+        {
+            var token = Config.Load()["Basic"];
+            using var client = new WitClient(token);
+            var appId = (await client.ListApps()).First().Id;
+            var basic = await client.GetAppInfo(appId);
+            Assert.Equal("en", basic.Lang);
+            Assert.True(basic.Private);
+        }
+
         // throw new InvalidOperationException(WitJson.Serialize(apps));
 
         [Fact]
