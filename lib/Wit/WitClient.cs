@@ -182,5 +182,25 @@ namespace Wit
             var list = rsp.Select(x => x.ToObject<Utterance>());
             return list.ToArray();
         }
+
+        /// <summary>
+        /// Returns list of all traits associated with your app.
+        /// </summary>
+        public async Task<Trait[]> ListTraits()
+        {
+            var rsp = await Request("/traits");
+            var list = rsp.Select(x => x.ToObject<Trait>());
+            return list.ToArray();
+        }
+
+        /// <summary>
+        /// Returns list of all entities associated with your app.
+        /// </summary>
+        public async Task<Entity[]> ListEntities()
+        {
+            var rsp = await Request("/entities");
+            var list = rsp.Select(x => x.ToObject<Entity>());
+            return list.ToArray();
+        }
     }
 }

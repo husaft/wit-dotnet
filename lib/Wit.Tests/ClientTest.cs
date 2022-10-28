@@ -45,6 +45,17 @@ namespace Wit.Tests
         }
 
         [Fact]
+        public async Task ShouldListEntities()
+        {
+            var token = Config.Load()["Celebrities"];
+            using var client = new WitClient(token);
+            var entities = await client.ListEntities();
+            Assert.True(entities.Length >= 1);
+            var person = entities.Count(t => t.Name.EndsWith("_person"));
+            Assert.Equal(1, person);
+        }
+
+        [Fact]
         public async Task ShouldListUtterances()
         {
             var token = Config.Load()["Celebrities"];
@@ -55,6 +66,17 @@ namespace Wit.Tests
             var trait = basic.Traits.Single();
             Assert.Equal("greetings", trait.Name);
             Assert.Equal("true", trait.Value);
+        }
+
+        [Fact]
+        public async Task ShouldListTraits()
+        {
+            var token = Config.Load()["Celebrities"];
+            using var client = new WitClient(token);
+            var traits = await client.ListTraits();
+            Assert.True(traits.Length >= 1);
+            var greet = traits.Count(t => t.Name.EndsWith("greetings"));
+            Assert.Equal(1, greet);
         }
 
         [Fact]
@@ -76,8 +98,6 @@ namespace Wit.Tests
             var url = await client.GetExportUrl();
             Assert.EndsWith("fbcdn.net", url.Host);
         }
-
-        // throw new InvalidOperationException(WitJson.Serialize(apps));
 
         [Fact]
         public void ShouldCustomLog()
