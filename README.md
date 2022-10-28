@@ -27,7 +27,7 @@ A minimal example looks like this:
 using Wit;
 
 var client = new WitClient(accessToken);
-client.SendMessage('set an alarm tomorrow at 7am');
+client.SendMessage("set an alarm tomorrow at 7am");
 ```
 
 ### Logging
