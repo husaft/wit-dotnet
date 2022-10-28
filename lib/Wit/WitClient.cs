@@ -157,5 +157,16 @@ namespace Wit
             var item = rsp.ToObject<AppInfo>();
             return item;
         }
+
+        /// <summary>
+        /// Get a URL where you can download a ZIP file containing all of your app data.
+        /// </summary>
+        public async Task<Uri> GetExportUrl()
+        {
+            var rsp = (await Request("/export")).Single();
+            var url = rsp["uri"]!.Value<string>();
+            var uri = new Uri(url!);
+            return uri;
+        }
     }
 }

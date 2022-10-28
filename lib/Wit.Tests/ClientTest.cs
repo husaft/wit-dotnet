@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Wit.Input;
 using Wit.Tests.Util;
@@ -50,6 +51,15 @@ namespace Wit.Tests
             var basic = await client.GetAppInfo(appId);
             Assert.Equal("en", basic.Lang);
             Assert.True(basic.Private);
+        }
+
+        [Fact]
+        public async Task ShouldGetExport()
+        {
+            var token = Config.Load()["Basic"];
+            using var client = new WitClient(token);
+            var url = await client.GetExportUrl();
+            Assert.EndsWith("fbcdn.net", url.Host);
         }
 
         // throw new InvalidOperationException(WitJson.Serialize(apps));
