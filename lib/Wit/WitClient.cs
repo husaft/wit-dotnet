@@ -11,6 +11,7 @@ using Wit.Core;
 using Wit.Data;
 using Wit.Errors;
 using Wit.Network;
+using Wit.Tools;
 
 namespace Wit
 {
@@ -95,26 +96,18 @@ namespace Wit
         /// Returns the meaning of the text message.
         /// </summary>
         /// <param name="msg">the text message</param>
-        public void SendMessage(string msg)
+        /// <param name="context">optional context</param>
+        public async Task<Meaning> GetMeaning(string msg,
+            IDictionary<string, string> context = null)
         {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            throw new NotImplementedException();
+            var query = new Dictionary<string, string>();
+            if (msg != null)
+                query["q"] = msg;
+            if (context != null)
+                query["context"] = WitJson.Serialize(context);
+            var rsp = (await Request("/message", query: query)).Single();
+            var item = rsp.ToObject<Meaning>();
+            return item;
         }
 
         /// <summary>

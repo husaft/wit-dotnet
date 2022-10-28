@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Wit.Input;
 using Wit.Tests.Util;
+using Wit.Tools;
 using Xunit;
 
 namespace Wit.Tests
@@ -10,12 +11,13 @@ namespace Wit.Tests
     public class ClientTest
     {
         [Fact]
-        public void ShouldSendMessage()
+        public async Task ShouldGetMeaning()
         {
             var token = Config.Load()["Basic"];
             using var client = new WitClient(token);
-            client.SendMessage("set an alarm tomorrow at 7am");
-            Assert.NotNull(client);
+            const string msg = "set an alarm tomorrow at 7am";
+            var mean = await client.GetMeaning(msg);
+            Assert.Equal(msg, mean.Text);
         }
 
         [Theory]
