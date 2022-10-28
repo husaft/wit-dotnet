@@ -161,5 +161,26 @@ namespace Wit
             var uri = new Uri(url!);
             return uri;
         }
+
+        /// <summary>
+        /// Returns a JSON array of utterances.
+        /// </summary>
+        /// <param name="limit">number of utterances to return</param>
+        /// <param name="offset">number of utterances to skip</param>
+        /// <param name="intents">list of intents to filter the utterances</param>
+        public async Task<Utterance[]> ListUtterances(int? limit = 100,
+            int? offset = null, string[] intents = null)
+        {
+            var query = new Dictionary<string, string>();
+            if (limit != null)
+                query["limit"] = limit + string.Empty;
+            if (offset != null)
+                query["offset"] = offset + string.Empty;
+            if (intents != null)
+                query["intents"] = intents + string.Empty;
+            var rsp = await Request("/utterances", query: query);
+            var list = rsp.Select(x => x.ToObject<Utterance>());
+            return list.ToArray();
+        }
     }
 }

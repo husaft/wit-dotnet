@@ -45,6 +45,19 @@ namespace Wit.Tests
         }
 
         [Fact]
+        public async Task ShouldListUtterances()
+        {
+            var token = Config.Load()["Celebrities"];
+            using var client = new WitClient(token);
+            var utter = await client.ListUtterances();
+            Assert.True(utter.Length >= 1);
+            var basic = utter.First(a => a.Text == "hello");
+            var trait = basic.Traits.Single();
+            Assert.Equal("greetings", trait.Name);
+            Assert.Equal("true", trait.Value);
+        }
+
+        [Fact]
         public async Task ShouldGetApp()
         {
             var token = Config.Load()["Basic"];
