@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Wit.Input;
 using Wit.Tests.Util;
-using Wit.Tools;
 using Xunit;
 
 namespace Wit.Tests

@@ -202,5 +202,23 @@ namespace Wit
             var list = rsp.Select(x => x.ToObject<Entity>());
             return list.ToArray();
         }
+
+        /// <summary>
+        /// Start an interactive conversation with the bot.
+        /// </summary>
+        /// <param name="handleMessage">optional callback</param>
+        public async Task DoInteractive(WitCallback handleMessage)
+        {
+            // TODO
+
+
+
+
+
+
+
+
+            throw new NotImplementedException();
+        }
     }
 }
