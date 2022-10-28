@@ -88,7 +88,7 @@ namespace Celebrities
             }
 
             var accessToken = args[0];
-            var logger = WitLog.Create(LogLevel.Trace);
+            var logger = WitLog.Create();
             using var client = new WitClient(accessToken, logger);
             _client = client;
             await client.DoInteractive(HandleMessage);

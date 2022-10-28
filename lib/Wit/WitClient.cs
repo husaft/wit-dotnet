@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using Wit.Core;
 using Wit.Data;
 using Wit.Errors;
+using Wit.Input;
 using Wit.Network;
 using Wit.Tools;
 
@@ -54,6 +55,7 @@ namespace Wit
 
         public string WitApiHost { get; set; } = WitConstants.DefaultWitUrl;
         public string WitApiVersion { get; set; } = WitConstants.DefaultApiVersion;
+        public string InteractivePrompt { get; set; } = "> ";
 
         private async Task<JObject[]> Request(string path, HttpMethod method = null,
             IDictionary<string, string> query = null, IDictionary<string, string> headers = null,
@@ -203,22 +205,27 @@ namespace Wit
             return list.ToArray();
         }
 
+        private static Task<string> ToJson(Meaning m)
+            => Task.FromResult(WitJson.Serialize(m));
+
         /// <summary>
-        /// Start an interactive conversation with the bot.
+        /// Runs interactive command line chat between user and bot. 
+        /// Runs indefinitely until EOF is entered to the prompt. 
         /// </summary>
-        /// <param name="handleMessage">optional callback</param>
-        public async Task DoInteractive(WitCallback handleMessage)
+        /// <param name="handler">optional function to customize your response</param>
+        /// <param name="ctx">optional initial context</param>
+        /// <param name="cmd">optional command line reader</param>
+        public async Task DoInteractive(WitCallback handler = null,
+            IDictionary<string, string> ctx = null, CommandLine cmd = null)
         {
-            // TODO
-
-
-
-
-
-
-
-
-            throw new NotImplementedException();
+            handler ??= ToJson;
+            cmd ??= new CommandLine();
+            while (cmd.Prompt(InteractivePrompt) is { } msg)
+            {
+                var res = await GetMeaning(msg, ctx);
+                var text = await handler(res);
+                cmd.Print(text);
+            }
         }
     }
 }

@@ -21,6 +21,11 @@ namespace Wit.Tests.Util
             Out.Append(text);
         }
 
+        protected override void WriteLine(string text)
+        {
+            Out.AppendLine(text);
+        }
+
         private string GetNextLine()
         {
             _index++;
@@ -33,10 +38,10 @@ namespace Wit.Tests.Util
         protected override string Read()
         {
             var line = GetNextLine();
-            Out.AppendLine(line);
+            WriteLine(line);
             return line;
         }
 
-        public override string ToString() => Out.ToString();
+        public override string ToString() => Out.ToString().Trim();
     }
 }

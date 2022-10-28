@@ -4,6 +4,7 @@ namespace Wit.Input
 {
     public class CommandLine
     {
+        protected virtual void WriteLine(string text) => Console.WriteLine(text);
         protected virtual void Write(string text) => Console.Write(text);
         protected virtual string Read() => Console.ReadLine();
 
@@ -16,5 +17,7 @@ namespace Wit.Input
             line = line.Trim();
             return line;
         }
+
+        public void Print(string text) => WriteLine(text);
     }
 }
