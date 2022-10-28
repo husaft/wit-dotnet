@@ -30,6 +30,20 @@ namespace Wit.Tests
         }
 
         [Fact]
+        public async Task ShouldListApps()
+        {
+            var token = Config.Load()["Basic"];
+            using var client = new WitClient(token);
+            var apps = await client.ListApps();
+            Assert.True(apps.Length >= 1);
+            var basic = apps.First(a => a.Name == "basics_bot");
+            Assert.Equal("en", basic.Lang);
+            Assert.True(basic.Private);
+        }
+
+        // throw new InvalidOperationException(WitJson.Serialize(apps));
+
+        [Fact]
         public void ShouldCustomLog()
         {
             var token = Config.Load()["Basic"];

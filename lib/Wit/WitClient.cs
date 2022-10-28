@@ -14,12 +14,20 @@ using Wit.Network;
 
 namespace Wit
 {
+    /// <summary>
+    /// The central access point for this library.
+    /// </summary>
     public sealed class WitClient : IDisposable
     {
         private readonly string _accessToken;
         private readonly ILogger _log;
         private readonly HttpClient _http;
 
+        /// <summary>
+        /// Create a new client instance.
+        /// </summary>
+        /// <param name="accessToken">the access token</param>
+        /// <param name="log">optional custom logger</param>
         public WitClient(string accessToken, ILogger log = null)
         {
             _accessToken = accessToken;
@@ -27,11 +35,19 @@ namespace Wit
             _http = new HttpClient();
         }
 
+        /// <summary>
+        /// Clean up all the resources.
+        /// </summary>
         public void Dispose()
         {
             _http.Dispose();
         }
 
+        /// <summary>
+        /// Requests some external URL.
+        /// </summary>
+        /// <param name="path">the web address</param>
+        /// <param name="query">the query parameters</param>
         public Task<JObject[]> RequestExt(string path, IDictionary<string, string> query = null)
             => Request(path, query: query, isApiCall: false);
 
@@ -75,8 +91,14 @@ namespace Wit
             return result;
         }
 
-        public void SendMessage(string message)
+        /// <summary>
+        /// Returns the meaning of the text message.
+        /// </summary>
+        /// <param name="msg">the text message</param>
+        public void SendMessage(string msg)
         {
+
+
 
 
 
@@ -105,6 +127,23 @@ namespace Wit
             var res = await Request("/language", query: query);
             var rsp = res.First()["detected_locales"];
             return rsp?.ToObject<DetectedLocale[]>();
+        }
+
+        /// <summary>
+        /// Returns an array of all your apps.
+        /// </summary>
+        /// <param name="limit">number of apps to return</param>
+        /// <param name="offset">number of utterances to skip</param>
+        public async Task<AppInfo[]> ListApps(int? limit = 100, int? offset = null)
+        {
+            var query = new Dictionary<string, string>();
+            if (limit is not null)
+                query["limit"] = limit + string.Empty;
+            if (offset is not null)
+                query["offset"] = offset + string.Empty;
+            var rsp = await Request("/apps", query: query);
+            var list = rsp.Select(x => x.ToObject<AppInfo>());
+            return list.ToArray();
         }
     }
 }
