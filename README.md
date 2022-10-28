@@ -1,2 +1,2 @@
 # wit-dotnet
-.NET library for Wit.ai
+`wit-dotnet` is the .NET SDK for [Wit.ai](http://wit.ai).
