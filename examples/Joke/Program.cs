@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Wit;
 using Wit.Data;
 using Wit.Input;
@@ -111,7 +109,7 @@ namespace Joke
             var accessToken = args[0];
             var logger = WitLog.Create();
             using var client = new WitClient(accessToken, logger);
-            await client.DoInteractive(m => Task.FromResult(HandleMessage(m)));
+            await client.DoInteractive(HandleMessage);
         }
     }
 }

@@ -227,5 +227,9 @@ namespace Wit
                 cmd.Print(text);
             }
         }
+
+        public async Task DoInteractive(WitSyncCallback handler,
+            IDictionary<string, string> ctx = null, CommandLine cmd = null)
+            => await DoInteractive(m => Task.FromResult(handler.Invoke(m)), ctx, cmd);
     }
 }
