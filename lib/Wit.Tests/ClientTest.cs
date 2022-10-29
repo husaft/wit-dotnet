@@ -82,7 +82,8 @@ namespace Wit.Tests
         {
             var token = Config.Load()["Basic"];
             using var client = new WitClient(token);
-            var appId = (await client.ListApps()).First().Id;
+            var apps = await client.ListApps();
+            var appId = apps.First(a => a.Name.StartsWith("basic")).Id;
             var basic = await client.GetAppInfo(appId);
             Assert.Equal("en", basic.Lang);
             Assert.True(basic.Private);
