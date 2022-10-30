@@ -59,7 +59,7 @@ namespace Wit
 
         private async Task<JObject[]> Request(string path, HttpMethod method = null,
             IDictionary<string, string> query = null, IDictionary<string, string> headers = null,
-            bool isApiCall = true)
+            bool isApiCall = true, FileObj binary = null, object payload = null)
         {
             method ??= HttpMethod.Get;
             var baseUrl = new Uri((isApiCall ? WitApiHost : string.Empty) + path);
@@ -76,9 +76,28 @@ namespace Wit
                 request.Headers.Accept.Add(acc);
             }
 
+            if (payload != null)
+            {
+                const string jsonMime = "application/json";
+                var jsonTxt = WitJson.Serialize(payload);
+                var content = new StringContent(jsonTxt, Encoding.UTF8, jsonMime);
+                content.Headers.ContentType = new MediaTypeHeaderValue(jsonMime);
+                request.Content = content;
+            }
+
+            if (binary != null)
+            {
+                var binaryMime = WitMime.ToContentType(binary.Type);
+                HttpContent content = binary.Stream != null
+                    ? new StreamContent(binary.Stream)
+                    : new ByteArrayContent(binary.Bytes);
+                content.Headers.ContentType = new MediaTypeHeaderValue(binaryMime);
+                request.Content = content;
+            }
+
             using var response = await _http.SendAsync(request);
             var text = await response.Content.ReadAsStringAsync();
-            var result = WitHttp.AsJsonObj(text);
+            var result = AsJsonObj(text);
             var json = result.FirstOrDefault();
 
             var statusCode = (int)response.StatusCode;

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 namespace Wit.Tools
@@ -21,6 +22,13 @@ namespace Wit.Tools
         }
 
         private static readonly JsonSerializerSettings Config = Create();
+
+        public static T Deserialize<T>(JToken token)
+        {
+            var json = token.ToString();
+            var obj = Deserialize<T>(json);
+            return obj;
+        }
 
         public static T Deserialize<T>(string text)
         {

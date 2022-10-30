@@ -44,11 +44,19 @@ namespace Wit.Network
 
         public static JObject[] AsJsonObj(string text)
         {
+            const string tmp = "}\r\n{";
+            if (text.Contains(tmp))
+            {
+                var patch = $"[{text.Replace(tmp, "},{")}]";
+                text = patch;
+            }
+
             if (text.StartsWith("["))
             {
                 var array = WitJson.Deserialize<JObject[]>(text);
                 return array;
             }
+
             var json = WitJson.Deserialize<JObject>(text);
             return new[] { json };
         }
