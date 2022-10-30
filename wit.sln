@@ -5,27 +5,28 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{93A6B92C-6050-43EF-9C43-4087E64A36BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wit", "lib\Wit\Wit.csproj", "{FE513F6C-3FD6-4616-8BBB-DA8191A82E27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wit", "lib\Wit\Wit.csproj", "{FE513F6C-3FD6-4616-8BBB-DA8191A82E27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wit.Tests", "lib\Wit.Tests\Wit.Tests.csproj", "{A7366A02-04D7-4B03-A4AA-BBCE77518F7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wit.Tests", "lib\Wit.Tests\Wit.Tests.csproj", "{A7366A02-04D7-4B03-A4AA-BBCE77518F7C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{9D9B840C-67A7-45A6-ACC2-A708C7D21B7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Celebrities", "examples\Celebrities\Celebrities.csproj", "{4377847C-398C-471F-B88D-9F8838512265}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Celebrities", "examples\Celebrities\Celebrities.csproj", "{4377847C-398C-471F-B88D-9F8838512265}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Joke", "examples\Joke\Joke.csproj", "{8E0E8FB9-74CA-49A1-B602-42D72738D8D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Joke", "examples\Joke\Joke.csproj", "{8E0E8FB9-74CA-49A1-B602-42D72738D8D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic", "examples\Basic\Basic.csproj", "{7973FB5F-8135-40CA-A4F3-C6FC5C1EA631}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basic", "examples\Basic\Basic.csproj", "{7973FB5F-8135-40CA-A4F3-C6FC5C1EA631}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voice", "examples\Voice\Voice.csproj", "{03E8D4DE-DD36-4137-8155-2E266474CC5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assist", "examples\Assist\Assist.csproj", "{F849D340-3701-4A72-9D97-2CC4344747E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speak", "examples\Speak\Speak.csproj", "{DBA25EA4-2068-46D9-995F-241A5E923AAA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Write", "examples\Write\Write.csproj", "{61AB7B43-2299-4749-BA77-D4040BB375C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FE513F6C-3FD6-4616-8BBB-DA8191A82E27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -48,10 +49,21 @@ Global
 		{7973FB5F-8135-40CA-A4F3-C6FC5C1EA631}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7973FB5F-8135-40CA-A4F3-C6FC5C1EA631}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7973FB5F-8135-40CA-A4F3-C6FC5C1EA631}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03E8D4DE-DD36-4137-8155-2E266474CC5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03E8D4DE-DD36-4137-8155-2E266474CC5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03E8D4DE-DD36-4137-8155-2E266474CC5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03E8D4DE-DD36-4137-8155-2E266474CC5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F849D340-3701-4A72-9D97-2CC4344747E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F849D340-3701-4A72-9D97-2CC4344747E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F849D340-3701-4A72-9D97-2CC4344747E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F849D340-3701-4A72-9D97-2CC4344747E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBA25EA4-2068-46D9-995F-241A5E923AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBA25EA4-2068-46D9-995F-241A5E923AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBA25EA4-2068-46D9-995F-241A5E923AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBA25EA4-2068-46D9-995F-241A5E923AAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61AB7B43-2299-4749-BA77-D4040BB375C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61AB7B43-2299-4749-BA77-D4040BB375C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61AB7B43-2299-4749-BA77-D4040BB375C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61AB7B43-2299-4749-BA77-D4040BB375C7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FE513F6C-3FD6-4616-8BBB-DA8191A82E27} = {93A6B92C-6050-43EF-9C43-4087E64A36BB}
@@ -59,6 +71,11 @@ Global
 		{4377847C-398C-471F-B88D-9F8838512265} = {9D9B840C-67A7-45A6-ACC2-A708C7D21B7A}
 		{8E0E8FB9-74CA-49A1-B602-42D72738D8D2} = {9D9B840C-67A7-45A6-ACC2-A708C7D21B7A}
 		{7973FB5F-8135-40CA-A4F3-C6FC5C1EA631} = {9D9B840C-67A7-45A6-ACC2-A708C7D21B7A}
-		{03E8D4DE-DD36-4137-8155-2E266474CC5D} = {9D9B840C-67A7-45A6-ACC2-A708C7D21B7A}
+		{F849D340-3701-4A72-9D97-2CC4344747E4} = {9D9B840C-67A7-45A6-ACC2-A708C7D21B7A}
+		{DBA25EA4-2068-46D9-995F-241A5E923AAA} = {9D9B840C-67A7-45A6-ACC2-A708C7D21B7A}
+		{61AB7B43-2299-4749-BA77-D4040BB375C7} = {9D9B840C-67A7-45A6-ACC2-A708C7D21B7A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7966C1D-96D1-4568-BB05-5071A06D3DBC}
 	EndGlobalSection
 EndGlobal

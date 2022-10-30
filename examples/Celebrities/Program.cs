@@ -31,7 +31,7 @@ namespace Celebrities
                     { "format", "json" },
                     { "languages", "en" }
                 });
-            var json = rsp.Single();
+            var json = rsp.Single;
             var description = json["entities"]![id]!["descriptions"]!["en"]!["value"];
             return $"ooo yes I know {celebrity.Name} -- {description}";
         }
