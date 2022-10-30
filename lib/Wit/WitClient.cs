@@ -127,7 +127,7 @@ namespace Wit
                 query["q"] = msg;
             if (context != null)
                 query["context"] = WitJson.Serialize(context);
-            var rsp = (await Request("/message", query: query)).Single();
+            var rsp = (await Request("/message", query: query)).Single;
             var item = rsp.ToObject<Meaning>();
             return item;
         }
@@ -150,10 +150,10 @@ namespace Wit
         /// Sends an audio file to the dictation API.
         /// </summary>
         /// <param name="file">an audio file</param>
-        public async Task<Speech[]> Dictation(FileObj file)
+        public async Task<Speech[]> Dictate(FileObj file)
         {
             var query = new Dictionary<string, string>();
-            var rsp = await Request("/dictation", HttpMethod.Post, query, binary: file);
+            var rsp = (await Request("/dictation", HttpMethod.Post, query, binary: file)).Array;
             var list = rsp.Select(WitJson.Deserialize<Speech>);
             return list.ToArray();
         }
@@ -166,7 +166,7 @@ namespace Wit
         {
             var query = new Dictionary<string, string> { ["q"] = msg };
             var res = await Request("/language", query: query);
-            var rsp = res.First()["detected_locales"];
+            var rsp = res.Single["detected_locales"];
             return rsp?.ToObject<DetectedLocale[]>();
         }
 
@@ -179,8 +179,8 @@ namespace Wit
         /// <param name="speed">its speed</param>
         /// <param name="pitch">its pitch</param>
         /// <param name="gain">its gain</param>
-        public async Task Synthesize(string msg, string voice, string style = "default",
-            int speed = 100, int pitch = 100, int gain = 100)
+        public async Task<Stream> Synthesize(string msg, string voice = "Rebecca",
+            string style = "default", int speed = 100, int pitch = 100, int gain = 100)
         {
             var query = new Dictionary<string, string>
             {
@@ -189,11 +189,8 @@ namespace Wit
                 ["pitch"] = pitch + string.Empty,
                 ["gain"] = gain + string.Empty
             };
-            var rsp = await Request("/synthesize", HttpMethod.Post, query);
-            
-
-
-            throw new InvalidOperationException(WitJson.Serialize(rsp));
+            var rsp = await Request("/synthesize", HttpMethod.Post, payload: query);
+            return rsp.Binary;
         }
 
         /// <summary>
@@ -208,8 +205,8 @@ namespace Wit
                 query["limit"] = limit + string.Empty;
             if (offset is not null)
                 query["offset"] = offset + string.Empty;
-            var rsp = await Request("/apps", query: query);
-            var list = rsp.Select(x => x.ToObject<AppInfo>());
+            var rsp = (await Request("/apps", query: query)).Array;
+            var list = rsp.Select(WitJson.Deserialize<AppInfo>);
             return list.ToArray();
         }
 
@@ -220,7 +217,7 @@ namespace Wit
         public async Task<AppInfo> GetAppInfo(string appId)
         {
             var endpoint = $"/apps/{WitHttp.Encode(appId)}";
-            var rsp = (await Request(endpoint)).Single();
+            var rsp = (await Request(endpoint)).Single;
             var item = rsp.ToObject<AppInfo>();
             return item;
         }
@@ -233,7 +230,7 @@ namespace Wit
         public async Task<AppVersion> GetAppVersionInfo(string appId, string tagId)
         {
             var endpoint = $"/apps/{WitHttp.Encode(appId)}/tags/{WitHttp.Encode(tagId)}";
-            var rsp = (await Request(endpoint)).Single();
+            var rsp = (await Request(endpoint)).Single;
             var item = rsp.ToObject<AppVersion>();
             return item;
         }
@@ -648,7 +645,7 @@ namespace Wit
                 query["offset"] = offset + string.Empty;
             if (intents != null)
                 query["intents"] = intents + string.Empty;
-            var rsp = await Request("/utterances", query: query);
+            var rsp = (await Request("/utterances", query: query)).Array;
             var list = rsp.Select(x => x.ToObject<Utterance>());
             return list.ToArray();
         }
@@ -658,7 +655,7 @@ namespace Wit
         /// </summary>
         public async Task<Trait[]> ListTraits()
         {
-            var rsp = await Request("/traits");
+            var rsp = (await Request("/traits")).Array;
             var list = rsp.Select(x => x.ToObject<Trait>());
             return list.ToArray();
         }
@@ -670,7 +667,7 @@ namespace Wit
         public async Task<AppVersion[]> ListAppVersions(string appId)
         {
             var endpoint = $"/apps/{WitHttp.Encode(appId)}/tags";
-            var rsp = await Request(endpoint);
+            var rsp = (await Request(endpoint)).Array;
             var list = rsp.Select(x => x.ToObject<AppVersion>());
             return list.ToArray();
         }
@@ -680,9 +677,19 @@ namespace Wit
         /// </summary>
         public async Task<Intent[]> ListIntents()
         {
-            var rsp = await Request("/intents");
+            var rsp = (await Request("/intents")).Array;
             var list = rsp.Select(x => x.ToObject<Intent>());
             return list.ToArray();
+        }
+
+        /// <summary>
+        /// Returns list of all voices associated with your app.
+        /// </summary>
+        public async Task<Dictionary<string, Voice[]>> ListVoices()
+        {
+            var rsp = await Request("/voices");
+            var item = rsp.Single.ToObject<Dictionary<string, Voice[]>>();
+            return item;
         }
 
         /// <summary>
@@ -690,7 +697,7 @@ namespace Wit
         /// </summary>
         public async Task<Entity[]> ListEntities()
         {
-            var rsp = await Request("/entities");
+            var rsp = (await Request("/entities")).Array;
             var list = rsp.Select(x => x.ToObject<Entity>());
             return list.ToArray();
         }
