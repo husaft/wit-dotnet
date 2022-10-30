@@ -247,7 +247,7 @@ namespace Wit
         {
             var data = new JObject { { "tag", tagName } };
             var endpoint = $"/apps/{appId}/tags/";
-            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single;
             var item = rsp.ToObject<AppInfo>();
             return item;
         }
@@ -260,7 +260,7 @@ namespace Wit
         {
             var data = new JObject { { "name", intentName } };
             var endpoint = "/intents";
-            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single;
             var item = rsp.ToObject<Intent>();
             return item;
         }
@@ -277,7 +277,7 @@ namespace Wit
             var endpoint = "/entities";
             if (lookups != null)
                 data["lookups"] = new JArray(lookups);
-            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single;
             var item = rsp.ToObject<Entity>();
             return item;
         }
@@ -296,7 +296,7 @@ namespace Wit
             var endpoint = $"/entities/{WitHttp.Encode(currentEntityName)}";
             if (lookups != null)
                 data["lookups"] = new JArray(lookups);
-            var rsp = (await Request(endpoint, HttpMethod.Put, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Put, payload: data)).Single;
             var item = rsp.ToObject<Entity>();
             return item;
         }
@@ -310,7 +310,7 @@ namespace Wit
             IDictionary<string, string> data)
         {
             var endpoint = $"/entities/{WitHttp.Encode(entityName)}/keywords";
-            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single;
             var item = rsp.ToObject<ValuePart>();
             return item;
         }
@@ -325,7 +325,7 @@ namespace Wit
         {
             var endpoint = $"/entities/{WitHttp.Encode(entityName)}/keywords/{WitHttp.Encode(keywordName)}/synonyms";
             var data = new JObject { { "synonym", synonym } };
-            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single;
             var item = rsp.ToObject<string>();
             return item;
         }
@@ -339,7 +339,7 @@ namespace Wit
         {
             var data = new JObject { { "name", traitName }, { "values", new JArray(values) } };
             var endpoint = "/traits";
-            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single;
             var item = rsp.ToObject<Trait>();
             return item;
         }
@@ -353,7 +353,7 @@ namespace Wit
         {
             var data = new JObject { { "value", newValue } };
             var endpoint = $"/traits/{WitHttp.Encode(traitName)}/values";
-            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single;
             var item = rsp.ToObject<TraitValue>();
             return item;
         }
@@ -365,7 +365,7 @@ namespace Wit
         public async Task<Utterance> Train(string[] data)
         {
             var endpoint = "/utterances";
-            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single;
             var item = rsp.ToObject<Utterance>();
             return item;
         }
@@ -384,7 +384,7 @@ namespace Wit
             var query = new Dictionary<string, string>();
             if (timeZone is not null)
                 query["timezone"] = timeZone;
-            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Post, payload: data)).Single;
             var item = rsp.ToObject<AppInfo>();
             return item;
         }
@@ -410,7 +410,7 @@ namespace Wit
                 data["private"] = isPrivate;
             if (timeZone != null)
                 data["timezone"] = timeZone;
-            var rsp = (await Request(endpoint, HttpMethod.Put, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Put, payload: data)).Single;
             var item = rsp.ToObject<AppInfo>();
             return item;
         }
@@ -434,7 +434,7 @@ namespace Wit
                 data["desc"] = desc;
             if (moveTo != null)
                 data["move_to"] = moveTo;
-            var rsp = (await Request(endpoint, HttpMethod.Put, payload: data)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Put, payload: data)).Single;
             var item = rsp.ToObject<AppVersion>();
             return item;
         }
@@ -446,7 +446,7 @@ namespace Wit
         public async Task<Trait> GetTraitInfo(string traitName)
         {
             var endpoint = $"/traits/{WitHttp.Encode(traitName)}";
-            var rsp = (await Request(endpoint)).Single();
+            var rsp = (await Request(endpoint)).Single;
             var item = rsp.ToObject<Trait>();
             return item;
         }
@@ -458,7 +458,7 @@ namespace Wit
         public async Task<DeletedResult> DeleteIntent(string intentName)
         {
             var endpoint = $"/intents/{WitHttp.Encode(intentName)}";
-            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single;
             var item = rsp.ToObject<DeletedResult>();
             return item;
         }
@@ -470,7 +470,7 @@ namespace Wit
         public async Task<DeletedResult> DeleteApp(string appId)
         {
             var endpoint = $"/apps/{WitHttp.Encode(appId)}";
-            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single;
             var item = rsp.ToObject<DeletedResult>();
             return item;
         }
@@ -483,7 +483,7 @@ namespace Wit
         public async Task<DeletedResult> DeleteAppVersion(string appId, string tagName)
         {
             var endpoint = $"/apps/{WitHttp.Encode(appId)}/tags/{WitHttp.Encode(tagName)}";
-            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single;
             var item = rsp.ToObject<DeletedResult>();
             return item;
         }
@@ -495,7 +495,7 @@ namespace Wit
         public async Task<DeletedResult> DeleteTrait(string traitName)
         {
             var endpoint = $"/traits/{WitHttp.Encode(traitName)}";
-            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single;
             var item = rsp.ToObject<DeletedResult>();
             return item;
         }
@@ -509,7 +509,7 @@ namespace Wit
             var data = new List<JObject>();
             foreach (var utterance in utterances)
                 data.Add(new JObject { { "text", utterance } });
-            var rsp = (await Request("/utterances", HttpMethod.Delete, payload: data)).Single();
+            var rsp = (await Request("/utterances", HttpMethod.Delete, payload: data)).Single;
             var item = rsp.ToObject<DeletedResult>();
             return item;
         }
@@ -522,7 +522,7 @@ namespace Wit
         public async Task<DeletedResult> DeleteTraitValue(string traitName, string valueName)
         {
             var endpoint = $"/traits/{WitHttp.Encode(traitName)}/values/{WitHttp.Encode(valueName)}";
-            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single;
             var item = rsp.ToObject<DeletedResult>();
             return item;
         }
@@ -536,7 +536,7 @@ namespace Wit
         public async Task<DeletedResult> DeleteSynonym(string entityName, string keywordName, string synonymName)
         {
             var endpoint = $"/entities/{WitHttp.Encode(entityName)}/keywords/{WitHttp.Encode(keywordName)}/synonyms/{WitHttp.Encode(synonymName)}";
-            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single;
             var item = rsp.ToObject<DeletedResult>();
             return item;
         }
@@ -549,7 +549,7 @@ namespace Wit
         public async Task<DeletedResult> DeleteKeyword(string entityName, string keywordName)
         {
             var end = $"/entities/{WitHttp.Encode(entityName)}/keywords/{WitHttp.Encode(keywordName)}";
-            var rsp = (await Request(end, HttpMethod.Delete)).Single();
+            var rsp = (await Request(end, HttpMethod.Delete)).Single;
             var item = rsp.ToObject<DeletedResult>();
             return item;
         }
@@ -562,7 +562,7 @@ namespace Wit
         public async Task<DeletedResult> DeleteRole(string entityName, string roleName)
         {
             var end = $"/entities/{WitHttp.Encode(entityName)}:{WitHttp.Encode(roleName)}";
-            var rsp = (await Request(end, HttpMethod.Delete)).Single();
+            var rsp = (await Request(end, HttpMethod.Delete)).Single;
             var item = rsp.ToObject<DeletedResult>();
             return item;
         }
@@ -574,7 +574,7 @@ namespace Wit
         public async Task<DeletedResult> DeleteEntity(string entityName)
         {
             var endpoint = $"/entities/{WitHttp.Encode(entityName)}";
-            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single();
+            var rsp = (await Request(endpoint, HttpMethod.Delete)).Single;
             var item = rsp.ToObject<DeletedResult>();
             return item;
         }
@@ -586,7 +586,7 @@ namespace Wit
         public async Task<Entity> GetEntityInfo(string entityName)
         {
             var endpoint = $"/entities/{WitHttp.Encode(entityName)}";
-            var rsp = (await Request(endpoint)).Single();
+            var rsp = (await Request(endpoint)).Single;
             var item = rsp.ToObject<Entity>();
             return item;
         }
@@ -598,7 +598,7 @@ namespace Wit
         public async Task<Intent> GetIntentInfo(string intentName)
         {
             var endpoint = $"/intents/{WitHttp.Encode(intentName)}";
-            var rsp = (await Request(endpoint)).Single();
+            var rsp = (await Request(endpoint)).Single;
             var item = rsp.ToObject<Intent>();
             return item;
         }
@@ -608,7 +608,7 @@ namespace Wit
         /// </summary>
         public async Task<Uri> GetExportUrl()
         {
-            var rsp = (await Request("/export")).Single();
+            var rsp = (await Request("/export")).Single;
             var url = rsp["uri"]!.Value<string>();
             var uri = new Uri(url!);
             return uri;
@@ -627,7 +627,7 @@ namespace Wit
                 ["name"] = name,
                 ["private"] = isPrivate + string.Empty
             };
-            var rsp = (await Request("/import", HttpMethod.Post, query, binary: file)).Single();
+            var rsp = (await Request("/import", HttpMethod.Post, query, binary: file)).Single;
             var item = rsp.ToObject<AppInfo>();
             return item;
         }
