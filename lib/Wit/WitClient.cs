@@ -154,8 +154,8 @@ namespace Wit
         {
             var query = new Dictionary<string, string>();
             var rsp = (await Request("/dictation", HttpMethod.Post, query, binary: file)).Array;
-            var list = rsp.Select(WitJson.Deserialize<Speech>);
-            return list.ToArray();
+            var list = rsp?.Select(WitJson.Deserialize<Speech>);
+            return list?.ToArray() ?? Array.Empty<Speech>();
         }
 
         /// <summary>
