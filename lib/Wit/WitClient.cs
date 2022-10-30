@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -51,14 +52,14 @@ namespace Wit
         /// </summary>
         /// <param name="path">the web address</param>
         /// <param name="query">the query parameters</param>
-        public Task<JObject[]> RequestExt(string path, IDictionary<string, string> query = null)
+        public Task<WitResult> RequestExt(string path, IDictionary<string, string> query = null)
             => Request(path, query: query, isApiCall: false);
 
         public string WitApiHost { get; set; } = WitConstants.DefaultWitUrl;
         public string WitApiVersion { get; set; } = WitConstants.DefaultApiVersion;
         public string InteractivePrompt { get; set; } = "> ";
 
-        private async Task<JObject[]> Request(string path, HttpMethod method = null,
+        private async Task<WitResult> Request(string path, HttpMethod method = null,
             IDictionary<string, string> query = null, IDictionary<string, string> headers = null,
             bool isApiCall = true, FileObj binary = null, object payload = null)
         {
@@ -97,9 +98,8 @@ namespace Wit
             }
 
             using var response = await _http.SendAsync(request);
-            var text = await response.Content.ReadAsStringAsync();
-            var result = WitHttp.AsJsonObj(text);
-            var json = result.FirstOrDefault();
+            var result = await WitHttp.ParseResult(response.Content);
+            var json = result.Array?.FirstOrDefault() ?? result.Single;
 
             var statusCode = (int)response.StatusCode;
             if (statusCode > 200)
