@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json.Linq;
 using Wit.Tools;
@@ -38,12 +40,28 @@ namespace Wit.Network
             if (headers == null)
                 return req;
             foreach (var pair in headers)
-                req.Headers.Add(pair.Key, pair.Value);
+            {
+                var key = pair.Key;
+                var val = pair.Value;
+                req.Headers.Add(key, val);
+            }
             return req;
         }
 
-        public static JObject[] AsJsonObj(string text)
+        public static async Task<WitResult> ParseResult(HttpContent content)
         {
+            var mediaType = content.Headers.ContentType?.MediaType;
+            if (mediaType != "application/json")
+            {
+                var orig = await content.ReadAsStreamAsync();
+                var stream = new MemoryStream();
+                await orig.CopyToAsync(stream);
+                stream.Position = 0L;
+                return new WitResult(mediaType, null, null, stream);
+            }
+
+            var text = await content.ReadAsStringAsync();
+
             const string tmp = "}\r\n{";
             if (text.Contains(tmp))
             {
@@ -54,11 +72,11 @@ namespace Wit.Network
             if (text.StartsWith("["))
             {
                 var array = WitJson.Deserialize<JObject[]>(text);
-                return array;
+                return new WitResult(mediaType, null, array, null);
             }
 
             var json = WitJson.Deserialize<JObject>(text);
-            return new[] { json };
+            return new WitResult(mediaType, json, null, null);
         }
 
         public static string Encode(string input)
