@@ -136,14 +136,12 @@ namespace Wit
         /// Sends an audio file to the speech API.
         /// </summary>
         /// <param name="file">an audio file</param>
-        public async Task Speech(FileObj file)
+        public async Task<Spoken[]> Speech(FileObj file)
         {
             var query = new Dictionary<string, string>();
-            var rsp = await Request("/speech", HttpMethod.Post, query, binary: file);
-
-
-            
-            throw new InvalidOperationException(WitJson.Serialize(rsp));
+            var rsp = (await Request("/speech", HttpMethod.Post, query, binary: file)).Array;
+            var list = rsp?.Select(WitJson.Deserialize<Spoken>);
+            return list?.ToArray() ?? Array.Empty<Spoken>();
         }
 
         /// <summary>
@@ -702,7 +700,7 @@ namespace Wit
             return list.ToArray();
         }
 
-        private static Task<string> ToJson(Meaning m)
+        private static Task<string> ToJson(IMeaning m)
             => Task.FromResult(WitJson.Serialize(m));
 
         /// <summary>

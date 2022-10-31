@@ -2,5 +2,5 @@
 
 namespace Wit.Core
 {
-    public delegate string WitSyncCallback(Meaning response);
+    public delegate string WitSyncCallback(IMeaning response);
 }

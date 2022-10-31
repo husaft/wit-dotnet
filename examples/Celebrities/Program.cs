@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Wit;
 using Wit.Data;
@@ -10,7 +11,7 @@ namespace Celebrities
 {
     internal static class Program
     {
-        private static async Task<string> LoadWikiData(ResolvedPart celebrity)
+        private static async Task<string> LoadWikiData(WitClient client, ResolvedPart celebrity)
         {
             string id;
             try
@@ -21,7 +22,7 @@ namespace Celebrities
             {
                 return $"I recognize {celebrity.Name}!";
             }
-            var rsp = await _client.RequestExt("https://www.wikidata.org/w/api.php",
+            var rsp = await client.RequestExt("https://www.wikidata.org/w/api.php",
                 new Dictionary<string, string>
                 {
                     { "ids", id },
@@ -35,14 +36,17 @@ namespace Celebrities
             return $"ooo yes I know {celebrity.Name} -- {description}";
         }
 
-        private static async Task<string> HandleMessage(Meaning response)
+        private static Task<string> HandleMessage(IMeaning response) 
+            => HandleMessage(response, _client);
+
+        internal static async Task<string> HandleMessage(IMeaning response, WitClient client)
         {
             var greetings = GetFirst(response.Traits, "wit$greetings");
             var celebrity = GetFirst(
                 response.Entities, "wit$notable_person:notable_person"
             );
             if (celebrity != null)
-                return await LoadWikiData(celebrity);
+                return await LoadWikiData(client, celebrity);
             if (greetings != null)
                 return "Hi! You can say something like 'Tell me about Beyonce'";
             return "Um. I don't recognize that name. " +

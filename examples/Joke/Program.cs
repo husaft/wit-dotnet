@@ -56,7 +56,7 @@ namespace Joke
             return val;
         }
 
-        private static string HandleMessage(Meaning response)
+        private static string HandleMessage(IMeaning response)
         {
             var entities = response.Entities;
             var traits = response.Traits;

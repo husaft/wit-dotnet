@@ -3,5 +3,5 @@ using Wit.Data;
 
 namespace Wit.Core
 {
-    public delegate Task<string> WitCallback(Meaning response);
+    public delegate Task<string> WitCallback(IMeaning response);
 }

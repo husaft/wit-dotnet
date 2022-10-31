@@ -13,4 +13,10 @@
     <Content Include="..\..\secrets.json" Link="secrets.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>Assist</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
 </Project>
